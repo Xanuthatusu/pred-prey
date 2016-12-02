@@ -1,24 +1,28 @@
 #include "glut_app.h"
 #include "Predator.h"
-#include <random>
-#include <time.h>
+#include "creature_app.h"
 
 double g_screen_x = 700;
 double g_screen_y = 500;
 
-std::vector<Creature *> creatures;
+CreatureApp g_app(g_screen_x, g_screen_y, 15, 20, 5, 10);
+
+void display() {
+  g_app.displayCallback();
+}
+
+void keyboard(unsigned char code, int x, int y) {
+  g_app.keyboardCallback(code, x, y);
+}
+
+void reshape(int w, int h) {
+  g_app.reshapeCallback(w, h);
+}
+
+void mouse(int mouse_button, int state, int x, int y) {}
 
 int main(int argc, char **argv)
 {
-  for(int i=0; i < 15; i++) {
-    if (i > 5) {
-      creatures.push_back(new Predator);
-    } else {
-      //Prey newPrey;
-      //creatures.push_back(newPrey);
-    }
-  }
-
   glutInit(&argc, argv);
 
   glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);

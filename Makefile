@@ -1,5 +1,5 @@
 TARGETS := glut_main
-OBJECTS := glut_main.o app.o gl_draw.o glut_callback.o Creature.o Predator.o
+OBJECTS := glut_main.o app.o creature_app.o Creature.o Predator.o
 CXXFLAGS := -Wall -Werror
 LDFLAGS := -lglut -lGLU -lGL
 UNAME := $(shell uname)
@@ -24,10 +24,7 @@ glut_main.o: glut_main.cpp glut_app.h
 app.o: app.cpp glut_app.h
 	$(CXX) $(CXXFLAGS) -c $<
 
-gl_draw.o: gl_draw.cpp glut_app.h
-	$(CXX) $(CXXFLAGS) -c $<
-
-glut_callback.o: glut_callback.cpp glut_app.h
+creature_app.o: creature_app.cpp creature_app.h
 	$(CXX) $(CXXFLAGS) -c $<
 
 Creature.o: Creature.cpp Creature.h

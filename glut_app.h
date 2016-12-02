@@ -23,25 +23,6 @@
 extern double g_screen_x;
 extern double g_screen_y;
 
-extern std::vector<Creature *> creatures;
-
-//
-// GLUT callback functions
-// glut_callback.cpp
-void display(void);
-void keyboard(unsigned char c, int x, int y);
-void reshape(int w, int h);
-void mouse(int mouse_button, int state, int x, int y);
-
-//
-// OpenGL Drawing Functions
-// gl_draw.cpp
-void DrawCircle(double x1, double y1, double radius);
-void DrawRectangle(double x1, double y1, double x2, double y2);
-void DrawTriangle(double x1, double y1, double x2, double y2, double x3, double y3);
-void DrawText(double x, double y, const char *string);
-
-
 //
 // Application specific functions
 // app.cpp

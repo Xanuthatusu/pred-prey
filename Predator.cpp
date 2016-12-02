@@ -34,6 +34,11 @@ void Predator::draw() {
   int y2 = deltaY * (mCoords.second + 1);
 
   glColor3d(1, 0, 0);
-  DrawRectangle(x1, y1, x2, y2);
+  glBegin(GL_QUADS);
+  glVertex2d(x1, y1);
+  glVertex2d(x2, y1);
+  glVertex2d(x2, y2);
+  glVertex2d(x1, y2);
+  glEnd();
 }
 
