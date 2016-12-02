@@ -2,8 +2,9 @@
 #include "glut_app.h"
 
 #include "Predator.h"
+#include "Prey.h"
 
-#include <random>
+#include <stdlib.h>
 #include <time.h>
 
 CreatureApp::CreatureApp(
@@ -12,7 +13,7 @@ CreatureApp::CreatureApp(
     int grid_width,
     int grid_height,
     int num_pred,
-    int num_prey) : mCurrentCreatureIndex(0) {
+    int num_prey) : mCurrentCreatureIndex(0), mGridWidth(grid_width), mGridHeight(grid_height) {
 
   srand(time(0));
   int preyAdded = 0;
@@ -21,10 +22,10 @@ CreatureApp::CreatureApp(
     if (preyAdded >= num_prey) {
       mCreatures.push_back(new Predator);
     } else if (predAdded >= num_pred) {
-      //mCreatures.push_back(new Prey);
+      mCreatures.push_back(new Prey);
     } else {
       if (rand() % 2 + 1 == 1) {
-        //mCreatures.push_back(new Prey);
+        mCreatures.push_back(new Prey);
         preyAdded += 1;
       } else {
         mCreatures.push_back(new Predator);
@@ -38,7 +39,7 @@ void CreatureApp::displayCallback() {
   glClear(GL_COLOR_BUFFER_BIT);
 
   for(size_t i=0; i < mCreatures.size(); i++) {
-    mCreatures[i]->draw();
+    mCreatures[i]->draw(mGridWidth, mGridHeight);
   }
 
   glutSwapBuffers();

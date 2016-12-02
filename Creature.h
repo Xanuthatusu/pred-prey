@@ -9,7 +9,7 @@ public:
   virtual void printType();
   virtual void update();
   virtual void printLocation();
-  virtual void draw();
+  virtual void draw(int grid_width, int grid_height);
   void makeRandomMove(int &x, int &y);
 protected:
   std::pair<int, int> mCoords;

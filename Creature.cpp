@@ -1,4 +1,5 @@
 #include "Creature.h"
+#include "glut_app.h"
 #include <iostream>
 
 Creature::Creature() : mCoords(0, 0) {
@@ -52,5 +53,21 @@ void Creature::makeRandomMove(int &x, int &y) {
 
 void Creature::update() {}
 void Creature::printLocation() {}
-void Creature::draw() {}
+
+void Creature::draw(int grid_width, int grid_height) {
+  int deltaX = g_screen_x / grid_width;
+  int deltaY = g_screen_y / grid_height;
+
+  int x1 = deltaX * mCoords.first;
+  int x2 = deltaX * (mCoords.first + 1);
+  int y1 = deltaY * mCoords.second;
+  int y2 = deltaY * (mCoords.second + 1);
+
+  glBegin(GL_QUADS);
+  glVertex2d(x1, y1);
+  glVertex2d(x2, y1);
+  glVertex2d(x2, y2);
+  glVertex2d(x1, y2);
+  glEnd();
+}
 

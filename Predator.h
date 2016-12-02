@@ -6,12 +6,8 @@
 class Predator: public Creature {
 public:
   Predator();
-  int getX() const;
-  int getY() const;
-  void printType();
   void update();
-  void printLocation();
-  void draw();
+  void draw(int grid_width, int grid_height);
 };
 
 #endif // PREDATOR_H

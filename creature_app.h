@@ -13,6 +13,8 @@ public:
 private:
   std::vector<Creature *> mCreatures;
   int mCurrentCreatureIndex;
+  int mGridWidth;
+  int mGridHeight;
 };
 
 #endif // CREATURE_APP_H
