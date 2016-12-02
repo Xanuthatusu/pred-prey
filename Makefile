@@ -13,10 +13,10 @@ endif
 all: $(TARGETS)
 
 check: $(TARGETS)
-	./glut_main
+	./PP
 
 glut_main: $(OBJECTS)
-	$(CXX) $(CXXFLAGS) -o $@ $^ $(LDFLAGS)
+	$(CXX) $(CXXFLAGS) -o PP $^ $(LDFLAGS)
 
 glut_main.o: glut_main.cpp glut_app.h
 	$(CXX) $(CXXFLAGS) -c $<
