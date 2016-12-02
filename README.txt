@@ -1,0 +1,45 @@
+//////////////////////////////////////////////////////////////////////////////
+// OpenGL/GLUT starter kit
+// There are 3 versions:
+// 1- for Windows and Visual Studio
+// 2- for OS X and X-Code
+// 3- for Linux or OS X and Make
+// Created spring, 2011
+// Modified fall, 2016
+//
+// This is a starting point for OpenGl/Glut applications.
+// Add code to the "display" function, or otherwise
+// modify these files to get your desired results.
+//
+//////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////
+// Windows and Visual Studio:
+// For a new project, add these files to an empty Windows Console project
+//		and then compile and run as is.
+// NOTE: You should also have glut.h,
+// glut32.dll, and glut32.lib in the directory of your project.
+// OR, see GlutDirectories.txt for a better place to put them.
+//
+// You may also look for the pre-built solution/project with these files added.
+//////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////
+// OS X and X-Code:
+//
+// Start from scratch instructions not provided.
+//
+// You may also look for the pre-built project with these files added.
+//////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////
+// Linux or OS X and Make:
+//
+// Put these files, including the Makefile in a directory.  Build and run.
+//
+//////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
