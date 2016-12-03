@@ -35,6 +35,12 @@ CreatureApp::CreatureApp(
   }
 }
 
+CreatureApp::~CreatureApp() {
+  for (size_t i=0; i < mCreatures.size(); i++) {
+    delete mCreatures[i];
+  }
+}
+
 void CreatureApp::displayCallback() {
   glClear(GL_COLOR_BUFFER_BIT);
 
@@ -54,7 +60,7 @@ void CreatureApp::keyboardCallback(unsigned char code, int x, int y) {
     case 's':
       mCreatures[mCurrentCreatureIndex]->update();
       mCurrentCreatureIndex += 1;
-      if (mCurrentCreatureIndex >= mCreatures.size()) {
+      if ((unsigned)mCurrentCreatureIndex >= mCreatures.size()) {
         mCurrentCreatureIndex = 0;
       }
       break;

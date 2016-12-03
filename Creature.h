@@ -6,6 +6,7 @@
 class Creature {
 public:
   Creature();
+  virtual ~Creature();
   virtual void printType();
   virtual void update();
   virtual void printLocation();

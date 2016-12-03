@@ -8,6 +8,8 @@ Creature::Creature() : mCoords(0, 0) {
   }
 }
 
+Creature::~Creature() {}
+
 void Creature::printType() {
   std::cout << "I'm just a generic Creature" << std::endl;
 }
