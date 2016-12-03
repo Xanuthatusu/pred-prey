@@ -7,11 +7,9 @@ class Creature {
 public:
   Creature();
   virtual ~Creature();
-  virtual void printType();
   virtual void update();
-  virtual void printLocation();
   virtual void draw(int grid_width, int grid_height);
-  void makeRandomMove(int &x, int &y);
+  void makeRandomMove();
 protected:
   std::pair<int, int> mCoords;
 };

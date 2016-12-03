@@ -4,7 +4,7 @@
 Prey::Prey() : Creature() {}
 
 void Prey::update() {
-  makeRandomMove(mCoords.first, mCoords.second);
+  makeRandomMove();
 }
 
 void Prey::draw(int grid_width, int grid_height) {

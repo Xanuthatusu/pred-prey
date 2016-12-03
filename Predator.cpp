@@ -4,7 +4,7 @@
 Predator::Predator() : Creature() {}
 
 void Predator::update() {
-  makeRandomMove(mCoords.first, mCoords.second);
+  makeRandomMove();
 }
 
 void Predator::draw(int grid_width, int grid_height) {
