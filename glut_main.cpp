@@ -37,7 +37,7 @@ int main(int argc, char **argv)
     } 
   else 
     {
-      glutCreateWindow("This appears in the title bar");
+      glutCreateWindow("Predator and Prey");
     }
 
   glutDisplayFunc(display);
