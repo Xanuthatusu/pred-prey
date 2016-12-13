@@ -3,6 +3,7 @@
 
 #include "Creature.h"
 #include <vector>
+#include <map>
 
 class CreatureApp {
 public:
@@ -12,6 +13,7 @@ public:
   void keyboardCallback(unsigned char code, int x, int y);
   void reshapeCallback(int w, int h);
 private:
+  std::map<std::pair<int, int>, Creature *> mGrid;
   std::vector<Creature *> mCreatures;
   int mCurrentCreatureIndex;
   int mGridWidth;

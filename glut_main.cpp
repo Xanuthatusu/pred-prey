@@ -5,7 +5,7 @@
 double g_screen_x = 700;
 double g_screen_y = 500;
 
-CreatureApp g_app(g_screen_x, g_screen_y, 15, 20, 5, 10);
+CreatureApp g_app(g_screen_x, g_screen_y, 20, 20, 5, 25);
 
 void display() {
   g_app.displayCallback();

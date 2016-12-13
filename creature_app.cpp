@@ -20,15 +20,23 @@ CreatureApp::CreatureApp(
   int predAdded = 0;
   for(int i=0; i < num_pred + num_prey; i++) {
     if (preyAdded >= num_prey) {
-      mCreatures.push_back(new Predator);
+      Predator *newPred = new Predator(mGrid, mGridWidth, mGridHeight);
+      mCreatures.push_back(newPred);
+      mGrid[std::make_pair(0, 0)] = newPred;
     } else if (predAdded >= num_pred) {
-      mCreatures.push_back(new Prey);
+      Prey *newPrey = new Prey(mGrid, mGridWidth, mGridHeight);
+      mCreatures.push_back(newPrey);
+      mGrid[std::make_pair(0, 0)] = newPrey;
     } else {
       if (rand() % 2 + 1 == 1) {
-        mCreatures.push_back(new Prey);
+        Prey *newPrey = new Prey(mGrid, mGridWidth, mGridHeight);
+        mCreatures.push_back(newPrey);
+        mGrid[std::make_pair(0, 0)] = newPrey;
         preyAdded += 1;
       } else {
-        mCreatures.push_back(new Predator);
+        Predator *newPred = new Predator(mGrid, mGridWidth, mGridHeight);
+        mCreatures.push_back(newPred);
+        mGrid[std::make_pair(0, 0)] = newPred;
         predAdded += 1;
       }
     }
@@ -39,6 +47,13 @@ CreatureApp::~CreatureApp() {
   for (size_t i=0; i < mCreatures.size(); i++) {
     delete mCreatures[i];
   }
+  // I'm not sure if this is neccessary, but it gives an 
+  // error code when closing currently.
+
+  //st::map<std::pair<int, int>, Creature *>::iterator it;
+  //for (it = mGrid.begin(); it != mGrid.end(); it++) {
+    //mGrid.erase(it);
+  //}
 }
 
 void CreatureApp::displayCallback() {
@@ -58,7 +73,7 @@ void CreatureApp::keyboardCallback(unsigned char code, int x, int y) {
       exit(0);
       break;
     case 's':
-      mCreatures[mCurrentCreatureIndex]->update();
+      mCreatures[mCurrentCreatureIndex]->update(mCreatures, mGrid, mGridWidth, mGridHeight);
       mCurrentCreatureIndex += 1;
       if ((unsigned)mCurrentCreatureIndex >= mCreatures.size()) {
         mCurrentCreatureIndex = 0;
