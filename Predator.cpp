@@ -3,7 +3,7 @@
 #include <iostream>
 #include <algorithm>
 
-Predator::Predator(int x, int y) : Creature(x, y), timeUntilReproduce(4), timeUntilDeath(3) {}
+Predator::Predator(int x, int y) : Creature(x, y), timeUntilReproduce(8), timeUntilDeath(3) {}
 
 Predator::Predator(std::map<std::pair<int, int>, Creature *> &grid, int grid_width, int grid_height) : Creature(grid, grid_width, grid_height), timeUntilReproduce(8), timeUntilDeath(3) {}
 
@@ -11,7 +11,7 @@ void Predator::update(std::vector<Creature *> &creatures, std::map<std::pair<int
   if (timeUntilDeath == 0) {
     grid.erase(mCoords);
     creatures.erase(std::remove(creatures.begin(), creatures.end(), this), creatures.end());
-  } else if (timeUntilReproduce == 0) {
+  } else if (timeUntilReproduce <= 0) {
     std::map<std::pair<int, int>, Creature *>::iterator northernNeighbor = grid.find(std::make_pair(mCoords.first, mCoords.second + 1));
     std::map<std::pair<int, int>, Creature *>::iterator easternNeighbor = grid.find(std::make_pair(mCoords.first + 1, mCoords.second));
     std::map<std::pair<int, int>, Creature *>::iterator southernNeighbor = grid.find(std::make_pair(mCoords.first, mCoords.second - 1));
@@ -70,7 +70,7 @@ void Predator::update(std::vector<Creature *> &creatures, std::map<std::pair<int
       Predator *newPred = new Predator(newCoords.first, newCoords.second);
       creatures.push_back(newPred);
       grid[newCoords] = newPred;
-      timeUntilReproduce = 4;
+      timeUntilReproduce = 8;
     }
   } else {
     std::vector<Prey *> prey = canEat(grid, grid_width, grid_height);
@@ -94,6 +94,7 @@ void Predator::update(std::vector<Creature *> &creatures, std::map<std::pair<int
     } else {
       makeRandomMove(grid, grid_width, grid_height);
       timeUntilDeath -= 1;
+      timeUntilReproduce -= 1;
     }
   }
 }
