@@ -5,7 +5,7 @@
 
 class Prey : public Creature {
 public:
-  Prey(int x, int y);
+  Prey(int x, int y, int gen);
   Prey(std::map<std::pair<int, int>, Creature *> &grid, int grid_width, int grid_height);
   void update(std::vector<Creature *> &creatures, std::map<std::pair<int, int>, Creature *> &grid, int grid_width, int grid_height);
   void draw(int grid_width, int grid_height);

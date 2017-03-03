@@ -2,9 +2,27 @@
 #include "glut_app.h"
 #include <iostream>
 
-Creature::Creature(int x, int y) : mCoords(x, y) {}
+void DrawText(double x, double y, const char *string)
+{
+  void *font = GLUT_BITMAP_9_BY_15;
 
-Creature::Creature(std::map<std::pair<int, int>, Creature *> &grid, int grid_width, int grid_height) : mCoords(0, 0) {
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+  glEnable(GL_BLEND);
+	
+  size_t len, i;
+  glRasterPos2d(x, y);
+  len = strlen(string);
+  for (i = 0; i < len; i++) 
+    {
+      glutBitmapCharacter(font, string[i]);
+    }
+
+  glDisable(GL_BLEND);
+}
+
+Creature::Creature(int x, int y, int gen) : mCoords(x, y), mGeneration(gen) {}
+
+Creature::Creature(std::map<std::pair<int, int>, Creature *> &grid, int grid_width, int grid_height) : mCoords(0, 0), mGeneration(0) {
   bool foundRandomLocation = false;
   while (!foundRandomLocation) {
     int randomX = rand() % grid_width;
@@ -37,7 +55,7 @@ void Creature::makeRandomMove(std::map<std::pair<int, int>, Creature *> &grid, i
     switch (direction) {
       case 1:
         // North
-        if(mCoords.second + 1 < grid_height && northernNeighbor == grid.end() && not tried[0]) {
+        if(mCoords.second + 1 < grid_height + 1 && northernNeighbor == grid.end() && not tried[0]) {
           mCoords.second += 1;
           moved = true;
         }
@@ -45,7 +63,7 @@ void Creature::makeRandomMove(std::map<std::pair<int, int>, Creature *> &grid, i
         break;
       case 2:
         // East
-        if(mCoords.first + 1 < grid_width && easternNeighbor == grid.end() && not tried[1]) {
+        if(mCoords.first + 1 < grid_width + 1 && easternNeighbor == grid.end() && not tried[1]) {
           mCoords.first += 1;
           moved = true;
         }
@@ -82,9 +100,9 @@ void Creature::draw(int grid_width, int grid_height) {
   int deltaY = g_screen_y / grid_height;
 
   int x1 = deltaX * mCoords.first;
-  int x2 = deltaX * (mCoords.first + 1);
+  int x2 = deltaX * (mCoords.first - 1);
   int y1 = deltaY * mCoords.second;
-  int y2 = deltaY * (mCoords.second + 1);
+  int y2 = deltaY * (mCoords.second - 1);
 
   glBegin(GL_QUADS);
   glVertex2d(x1, y1);
@@ -92,9 +110,15 @@ void Creature::draw(int grid_width, int grid_height) {
   glVertex2d(x2, y2);
   glVertex2d(x1, y2);
   glEnd();
+
+  std::string str = std::to_string(mGeneration);
+
+  glColor3d(0,0,0);
+  DrawText(double(x2), double(y2), str.c_str());
 }
 
-char* Creature::getType() {
-  return "generic";
+const char* Creature::getType() {
+  char const *string = "generic";
+  return string;
 }
 

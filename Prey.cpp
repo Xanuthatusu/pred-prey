@@ -2,14 +2,15 @@
 #include "glut_app.h"
 #include <iostream>
 
-Prey::Prey(int x, int y) : Creature(x, y), timeUntilReproduce(3) {}
+Prey::Prey(int x, int y, int gen) : Creature(x, y, gen), timeUntilReproduce(3) {}
 
 Prey::Prey(std::map<std::pair<int, int>, Creature *> &grid, int grid_width, int grid_height) : Creature(grid, grid_width, grid_height), timeUntilReproduce(3) {}
 
 void Prey::update(std::vector<Creature *> &creatures, std::map<std::pair<int, int>, Creature *> &grid, int grid_width, int grid_height) {
   makeRandomMove(grid, grid_width, grid_height);
+
   timeUntilReproduce -= 1;
-  if (timeUntilReproduce == 0) {
+  if (timeUntilReproduce <= 0) {
     std::map<std::pair<int, int>, Creature *>::iterator northernNeighbor = grid.find(std::make_pair(mCoords.first, mCoords.second + 1));
     std::map<std::pair<int, int>, Creature *>::iterator easternNeighbor = grid.find(std::make_pair(mCoords.first + 1, mCoords.second));
     std::map<std::pair<int, int>, Creature *>::iterator southernNeighbor = grid.find(std::make_pair(mCoords.first, mCoords.second - 1));
@@ -17,12 +18,14 @@ void Prey::update(std::vector<Creature *> &creatures, std::map<std::pair<int, in
 
     std::pair<int, int> newCoords;
 
+    bool canReproduce = true;
     bool done = false;
     bool tried[4] = { false, false, false, false };
     while (!done) {
       int direction = rand() % 4 + 1;
       if (tried[0] && tried[1] && tried[2] && tried[3]) {
         done = true;
+        canReproduce = false;
       }
       switch (direction) {
         case 1:
@@ -62,10 +65,12 @@ void Prey::update(std::vector<Creature *> &creatures, std::map<std::pair<int, in
       }
     }
 
-    Prey *newPrey = new Prey(newCoords.first, newCoords.second);
-    creatures.push_back(newPrey);
-    grid[newCoords] = newPrey;
-    timeUntilReproduce = 3;
+    if (canReproduce) {
+      Prey *newPrey = new Prey(newCoords.first, newCoords.second, mGeneration + 1);
+      creatures.push_back(newPrey);
+      grid[newCoords] = newPrey;
+      timeUntilReproduce = 3;
+    }  
   }
 }
 

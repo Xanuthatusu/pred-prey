@@ -2,10 +2,10 @@
 #include "Predator.h"
 #include "creature_app.h"
 
-double g_screen_x = 700;
-double g_screen_y = 500;
+double g_screen_x = 1400;
+double g_screen_y = 750;
 
-CreatureApp g_app(g_screen_x, g_screen_y, 20, 20, 5, 25);
+CreatureApp g_app(g_screen_x, g_screen_y, 50, 50, 20, 100);
 
 void display() {
   g_app.displayCallback();
@@ -47,8 +47,6 @@ int main(int argc, char **argv)
 
   glColor3d(0,0,0); // forground color
   glClearColor(0, 0, 0, 0); // background color
-
-  initialize_app();
 
   glutMainLoop();
 

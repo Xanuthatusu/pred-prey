@@ -6,6 +6,7 @@
 
 #include <stdlib.h>
 #include <time.h>
+#include <iostream>
 
 CreatureApp::CreatureApp(
     int screen_x,
@@ -50,9 +51,9 @@ CreatureApp::~CreatureApp() {
   // I'm not sure if this is neccessary, but it gives an 
   // error code when closing currently.
 
-  //st::map<std::pair<int, int>, Creature *>::iterator it;
+  //std::map<std::pair<int, int>, Creature *>::iterator it;
   //for (it = mGrid.begin(); it != mGrid.end(); it++) {
-    //mGrid.erase(it);
+    //delete it->second;
   //}
 }
 
@@ -67,6 +68,9 @@ void CreatureApp::displayCallback() {
 }
 
 void CreatureApp::keyboardCallback(unsigned char code, int x, int y) {
+  std::vector<Creature *>::iterator it;
+  std::vector<Creature *> temp = mCreatures;
+
   switch (code) {
     case 'q':
     case 27:
@@ -78,6 +82,12 @@ void CreatureApp::keyboardCallback(unsigned char code, int x, int y) {
       if ((unsigned)mCurrentCreatureIndex >= mCreatures.size()) {
         mCurrentCreatureIndex = 0;
       }
+      break;
+    case 'a':
+      for (it=mCreatures.begin(); it != mCreatures.end(); it++) {
+        (*it)->update(temp, mGrid, mGridWidth, mGridHeight);
+      }
+      mCreatures = temp;
       break;
     default:
       return;

@@ -7,7 +7,7 @@
 
 class Predator: public Creature {
 public:
-  Predator(int x, int y);
+  Predator(int x, int y, int gen);
   Predator(std::map<std::pair<int, int>, Creature *> &grid, int grid_width, int grid_height);
   void update(std::vector<Creature *> &creatures, std::map<std::pair<int, int>, Creature *> &grid, int grid_width, int grid_height);
   std::vector<Prey *> canEat(std::map<std::pair<int, int>, Creature *> &grid, int grid_width, int grid_height);

@@ -1,6 +1,7 @@
 TARGETS := glut_main
 OBJECTS := glut_main.o app.o creature_app.o Creature.o Predator.o Prey.o
-CXXFLAGS := -Wall -Werror
+CXXFLAGS := -Wall -Werror -std=c++11
+CXX := g++
 LDFLAGS := -lglut -lGLU -lGL
 UNAME := $(shell uname)
 

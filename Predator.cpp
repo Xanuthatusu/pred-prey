@@ -3,15 +3,37 @@
 #include <iostream>
 #include <algorithm>
 
-Predator::Predator(int x, int y) : Creature(x, y), timeUntilReproduce(8), timeUntilDeath(3) {}
+Predator::Predator(int x, int y, int gen) : Creature(x, y, gen), timeUntilReproduce(8), timeUntilDeath(3) {}
 
 Predator::Predator(std::map<std::pair<int, int>, Creature *> &grid, int grid_width, int grid_height) : Creature(grid, grid_width, grid_height), timeUntilReproduce(8), timeUntilDeath(3) {}
 
 void Predator::update(std::vector<Creature *> &creatures, std::map<std::pair<int, int>, Creature *> &grid, int grid_width, int grid_height) {
-  if (timeUntilDeath == 0) {
-    grid.erase(mCoords);
-    creatures.erase(std::remove(creatures.begin(), creatures.end(), this), creatures.end());
-  } else if (timeUntilReproduce <= 0) {
+  if (timeUntilReproduce > 0) {
+    std::vector<Prey *> prey = canEat(grid, grid_width, grid_height);
+    if (prey.size() > 0) {
+      int preyToEat = rand() % prey.size();
+      grid.erase(mCoords);
+      mCoords = prey[preyToEat]->getCoords();
+      grid[mCoords] = this;
+
+      for (std::map<std::pair<int, int>, Creature *>::iterator it=grid.begin(); it != grid.end(); it++) {
+        if (it->second == prey[preyToEat]) {
+          grid.erase(it->first);
+          break;
+        }
+      }
+
+      creatures.erase(std::remove(creatures.begin(), creatures.end(), prey[preyToEat]), creatures.end());
+
+      timeUntilDeath = 3;
+      timeUntilReproduce -= 1;
+    } else {
+      makeRandomMove(grid, grid_width, grid_height);
+      timeUntilDeath -= 1;
+      timeUntilReproduce -= 1;
+    }
+  }
+  if (timeUntilReproduce <= 0) {
     std::map<std::pair<int, int>, Creature *>::iterator northernNeighbor = grid.find(std::make_pair(mCoords.first, mCoords.second + 1));
     std::map<std::pair<int, int>, Creature *>::iterator easternNeighbor = grid.find(std::make_pair(mCoords.first + 1, mCoords.second));
     std::map<std::pair<int, int>, Creature *>::iterator southernNeighbor = grid.find(std::make_pair(mCoords.first, mCoords.second - 1));
@@ -67,35 +89,16 @@ void Predator::update(std::vector<Creature *> &creatures, std::map<std::pair<int
     }
 
     if (canReproduce) {
-      Predator *newPred = new Predator(newCoords.first, newCoords.second);
+      Predator *newPred = new Predator(newCoords.first, newCoords.second, mGeneration + 1);
       creatures.push_back(newPred);
       grid[newCoords] = newPred;
       timeUntilReproduce = 8;
     }
-  } else {
-    std::vector<Prey *> prey = canEat(grid, grid_width, grid_height);
-    if (prey.size() > 0) {
-      int preyToEat = rand() % prey.size();
-      grid.erase(mCoords);
-      mCoords = prey[preyToEat]->getCoords();
-      grid[mCoords] = this;
+  }
 
-      for (std::map<std::pair<int, int>, Creature *>::iterator it=grid.begin(); it != grid.end(); it++) {
-        if (it->second == prey[preyToEat]) {
-          grid.erase(it->first);
-          break;
-        }
-      }
-
-      creatures.erase(std::remove(creatures.begin(), creatures.end(), prey[preyToEat]), creatures.end());
-
-      timeUntilDeath = 3;
-      timeUntilReproduce -= 1;
-    } else {
-      makeRandomMove(grid, grid_width, grid_height);
-      timeUntilDeath -= 1;
-      timeUntilReproduce -= 1;
-    }
+  if (timeUntilDeath <= 0) {
+    grid.erase(mCoords);
+    creatures.erase(std::remove(creatures.begin(), creatures.end(), this), creatures.end());
   }
 }
 
